@@ -44,14 +44,18 @@ public class Formulas {
         return this.hallarCuota()*RENTA;
     }
     
-    public double ahorroFiscalXAñoFinal(){
+    public double ahorroFiscalAñoFinal(){
         return this.hallarCuotaFinal()*RENTA;
     }
     
     public double valorPresente(){
         double cuotasAPresente = ((hallarCuota()-ahorroFiscalXAño())*(Math.pow(1+descuento, (double)(n-1))-1))/(Math.pow(1+descuento, (double)(n-1))*descuento);
-        double cuotaFinalAPresente = (hallarCuotaFinal()-ahorroFiscalXAñoFinal())*(1/Math.pow(1+descuento,(double)n));
+        double cuotaFinalAPresente = (hallarCuotaFinal()-ahorroFiscalAñoFinal())*(1/Math.pow(1+descuento,(double)n));
         
         return cuotasAPresente + cuotaFinalAPresente;
+    }
+    
+    public double hallarAhorroFinal(){
+        return valorBien - valorPresente();
     }
 }
