@@ -17,8 +17,9 @@ public class LeasingCalculadora {
         System.out.println(leasing.hallarCuota());
         System.out.println(leasing.hallarCuotaFinal());
         System.out.println(leasing.ahorroFiscalXAño());
-        System.out.println(leasing.ahorroFiscalXAñoFinal());
+        System.out.println(leasing.ahorroFiscalAñoFinal());
         System.out.println(leasing.valorPresente());
+        System.out.println(leasing.hallarAhorroFinal());
         System.out.println("Hello World!");
     }
 }
