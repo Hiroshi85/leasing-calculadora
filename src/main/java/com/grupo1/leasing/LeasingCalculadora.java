@@ -13,7 +13,7 @@ import com.grupo1.leasing.presentacion.FrmPrincipal;
 public class LeasingCalculadora {
 
     public static void main(String[] args) {
-        Formulas leasing = new Formulas(0.1, 100000, 0.0d, 10000, 8, 0.125);
+        Formulas leasing = new Formulas(0.1, 100000, 0.0d, 0.1, 8, 0.125);
         System.out.println(leasing.hallarCuota());
         System.out.println(leasing.hallarCuotaFinal());
         System.out.println(leasing.ahorroFiscalXAño());

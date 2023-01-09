@@ -9,31 +9,35 @@ package com.grupo1.leasing.calculos;
  * @author hiros
  */
 public class Formulas {
-    private double interes;
+    private double tInteres;
     private double valorBien;
     private double cuota;
-    private double residual;
+    private double tResidual;
     private int n;
-    private double descuento;
+    private double tDescuento;
     private static final double RENTA = 0.295;
     
-    public Formulas(double interes, double valorBien, double cuota, double residual, int n, double descuento){
-        this.interes = interes;
+    public Formulas(double tInteres, double valorBien, double cuota, double tResidual, int n, double tDescuento){
+        this.tInteres = tInteres;
         this.valorBien=valorBien;
         this.cuota = cuota;
-        this.residual = residual;
+        this.tResidual = tResidual;
         this.n = n;
-        this.descuento = descuento;
+        this.tDescuento = tDescuento;
     }
     
     public double hallarCuota(){
-        double numerador =((valorBien*interes*Math.pow(1+interes, (double)n))-residual*interes);
-        double denominador = (Math.pow(1+interes,(double)n)-1);
+        double numerador =((valorBien*tInteres*Math.pow(1+tInteres, (double)n))-hallarValorDeCompra()*tInteres);
+        double denominador = (Math.pow(1+tInteres,(double)n)-1);
         return numerador/denominador;
     }
     
     public double hallarCuotaFinal(){
-        return this.hallarCuota()+residual;
+        return this.hallarCuota()+tResidual;
+    }
+    
+    public double hallarValorDeCompra(){
+        return this.valorBien*tResidual;
     }
     
     public double amortizacion(){
@@ -49,8 +53,8 @@ public class Formulas {
     }
     
     public double valorPresente(){
-        double cuotasAPresente = ((hallarCuota()-ahorroFiscalXAño())*(Math.pow(1+descuento, (double)(n-1))-1))/(Math.pow(1+descuento, (double)(n-1))*descuento);
-        double cuotaFinalAPresente = (hallarCuotaFinal()-ahorroFiscalAñoFinal())*(1/Math.pow(1+descuento,(double)n));
+        double cuotasAPresente = ((hallarCuota()-ahorroFiscalXAño())*(Math.pow(1+tDescuento, (double)(n-1))-1))/(Math.pow(1+tDescuento, (double)(n-1))*tDescuento);
+        double cuotaFinalAPresente = (hallarCuotaFinal()-ahorroFiscalAñoFinal())*(1/Math.pow(1+tDescuento,(double)n));
         
         return cuotasAPresente + cuotaFinalAPresente;
     }
