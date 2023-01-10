@@ -4,6 +4,8 @@
  */
 package com.grupo1.leasing.calculos;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author hiros
@@ -11,55 +13,79 @@ package com.grupo1.leasing.calculos;
 public class Formulas {
     private double tInteres;
     private double valorBien;
-    private double cuota;
     private double tResidual;
     private int n;
     private double tDescuento;
+    private boolean tieneOpcionCompra;
     private static final double RENTA = 0.295;
     
-    public Formulas(double tInteres, double valorBien, double cuota, double tResidual, int n, double tDescuento){
+    public Formulas(double tInteres, double valorBien, int n, double tResidual, double tDescuento, boolean tieneOpcionCompra){
         this.tInteres = tInteres;
         this.valorBien=valorBien;
-        this.cuota = cuota;
         this.tResidual = tResidual;
         this.n = n;
         this.tDescuento = tDescuento;
+        this.tieneOpcionCompra = tieneOpcionCompra;
     }
     
-    public double hallarCuota(){
-        double numerador =((valorBien*tInteres*Math.pow(1+tInteres, (double)n))-hallarValorDeCompra()*tInteres);
+    public double getCuota(){
+        double numerador =((valorBien*tInteres*Math.pow(1+tInteres, (double)n))-getValorDeCompra()*tInteres);
         double denominador = (Math.pow(1+tInteres,(double)n)-1);
         return numerador/denominador;
     }
     
-    public double hallarCuotaFinal(){
-        return this.hallarCuota()+tResidual;
+    public double getCuotaFinal(){
+        return this.getCuota()+getValorDeCompra();
     }
     
-    public double hallarValorDeCompra(){
+    public double getValorDeCompra(){
         return this.valorBien*tResidual;
     }
     
-    public double amortizacion(){
-        return 0.0d;
+    public ArrayList<Double> getAmortizaciones(){
+        ArrayList<Double> amort = new ArrayList<>();
+        return amort;
     }
     
-    public double ahorroFiscalXAño(){
-        return this.hallarCuota()*RENTA;
+    public double[][] getTablaInteres_Amort_Saldo(){
+        double [][] tabla = new  double[n][3];
+        double saldoAnterior = this.valorBien;
+        for(int i=0; i<n;i++){
+            double interes = tInteres*saldoAnterior;
+            tabla[i][0] = interes;
+            double cuota = getCuota();
+            if(i==(n-1) && tieneOpcionCompra) cuota = getCuotaFinal();
+            double amortizacion = cuota-interes;
+            tabla[i][1] = amortizacion;
+            double saldo = interes - amortizacion;
+            tabla[i][2] = saldo;
+            
+            saldoAnterior = saldo;
+            
+        }
+        
+        return tabla;
     }
     
-    public double ahorroFiscalAñoFinal(){
-        return this.hallarCuotaFinal()*RENTA;
+    public double getEscudoFiscalXAño(){
+        return this.getCuota()*RENTA;
     }
     
-    public double valorPresente(){
-        double cuotasAPresente = ((hallarCuota()-ahorroFiscalXAño())*(Math.pow(1+tDescuento, (double)(n-1))-1))/(Math.pow(1+tDescuento, (double)(n-1))*tDescuento);
-        double cuotaFinalAPresente = (hallarCuotaFinal()-ahorroFiscalAñoFinal())*(1/Math.pow(1+tDescuento,(double)n));
+    public double getValorPresente(){
+        double cuotasAPresente;
+        double cuotaFinalAPresente =0.0d;
+        if(tieneOpcionCompra){
+            cuotasAPresente = (getCuota()*(Math.pow(1+tDescuento, (double)(n-1))-1))/(Math.pow(1+tDescuento, (double)(n-1))*tDescuento);
+            cuotaFinalAPresente = getCuotaFinal()*(1/Math.pow(1+tDescuento,(double)n));
+        }else{
+            cuotasAPresente = ((getCuota()-getEscudoFiscalXAño())*(Math.pow(1+tDescuento, (double)(n))-1))/(Math.pow(1+tDescuento, (double)(n))*tDescuento);
+        }
         
         return cuotasAPresente + cuotaFinalAPresente;
     }
     
-    public double hallarAhorroFinal(){
-        return valorBien - valorPresente();
+    public double getAhorroFinal(){
+        //true = financiero
+        return valorBien - getValorPresente();
     }
 }
