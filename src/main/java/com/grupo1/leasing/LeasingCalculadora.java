@@ -18,13 +18,13 @@ public class LeasingCalculadora {
         System.out.println(leasing.getCuota());
         System.out.println(leasing.getCuotaFinal());
         System.out.println(leasing.getValorPresente());
-        System.out.println(leasing.getTablaInteres_Amort_Saldo());
-        System.out.println("--------Operativo------");
-        Formulas leasingO = new Formulas(0.1, 100000, 8,0.1, 0.125, false);
-        System.out.println(leasingO.getCuota());
-        System.out.println(leasingO.getEscudoFiscalXAño());
-        System.out.println(leasingO.getValorPresente());
-        System.out.println(leasingO.getTablaInteres_Amort_Saldo());
+        System.out.println(leasing.getTablaInteres_Amort_Saldo()[7][2]);
+//        System.out.println("--------Operativo------");
+//        Formulas leasingO = new Formulas(0.1, 100000, 8,0.1, 0.125, false);
+//        System.out.println(leasingO.getCuota());
+//        System.out.println(leasingO.getEscudoFiscalXAño());
+//        System.out.println(leasingO.getValorPresente());
+//        System.out.println(leasingO.getTablaInteres_Amort_Saldo());
 //        FrmOperativo frm = new FrmOperativo();
 //        frm.setVisible(true);
     }

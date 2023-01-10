@@ -57,11 +57,11 @@ public class Formulas {
             if(i==(n-1) && tieneOpcionCompra) cuota = getCuotaFinal();
             double amortizacion = cuota-interes;
             tabla[i][1] = amortizacion;
-            double saldo = interes - amortizacion;
+            double saldo = saldoAnterior - amortizacion;
             tabla[i][2] = saldo;
+            if(i==(n-1) && tieneOpcionCompra) tabla[i][2] = Math.floor(saldo);
             
             saldoAnterior = saldo;
-            
         }
         
         return tabla;
