@@ -14,7 +14,7 @@ public class LeasingCalculadora {
 
     public static void main(String[] args) {
         System.out.println("----------Financiero----");
-        Formulas leasing = new Formulas(0.1, 100000, 8,0.1, 0.125, true);
+        Formulas leasing = new Formulas(0.1, 100000, 0.0d,8,0.1, 0.125, true);
         System.out.println(leasing.getCuota());
         System.out.println(leasing.getCuotaFinal());
         System.out.println(leasing.getValorPresente());

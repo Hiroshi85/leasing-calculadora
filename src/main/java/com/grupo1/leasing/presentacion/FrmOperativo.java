@@ -25,7 +25,6 @@ public class FrmOperativo extends javax.swing.JFrame {
      * Creates new form FrmOperativo
      */
     public FrmOperativo() {
-        
         initComponents();
     }
 
@@ -38,6 +37,7 @@ public class FrmOperativo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtInteres = new javax.swing.JTextField();
@@ -52,7 +52,6 @@ public class FrmOperativo extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtBien = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        chkCompra = new javax.swing.JCheckBox();
         txtN = new javax.swing.JTextField();
         btnCalcular = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -62,10 +61,17 @@ public class FrmOperativo extends javax.swing.JFrame {
         lblEscudoAnual = new javax.swing.JLabel();
         lblValorPresente = new javax.swing.JLabel();
         lblAhorroFinal = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtCuota = new javax.swing.JTextField();
+        lblMonedaCuota = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        rbCompra = new javax.swing.JRadioButton();
+        rbCuota = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Leasing");
         setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Tasas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 16))); // NOI18N
 
@@ -89,22 +95,22 @@ public class FrmOperativo extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtInteres, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtInteres, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
-                .addGap(29, 29, 29)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
-                .addGap(18, 18, 18)
+                .addGap(41, 41, 41)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtResidual, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtResidual, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,15 +129,20 @@ public class FrmOperativo extends javax.swing.JFrame {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 195, 600, -1));
+
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Leasing");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 21, 202, -1));
 
         jLabel8.setText("Valor del Bien: ");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 104, -1, -1));
+        getContentPane().add(txtBien, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 98, 100, -1));
 
         jLabel9.setText("Número de Periodos: ");
-
-        chkCompra.setText("Opción a compra");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(424, 102, -1, -1));
+        getContentPane().add(txtN, new org.netbeans.lib.awtextra.AbsoluteConstraints(586, 98, 56, -1));
 
         btnCalcular.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnCalcular.setText("Calcular");
@@ -140,93 +151,80 @@ public class FrmOperativo extends javax.swing.JFrame {
                 btnCalcularActionPerformed(evt);
             }
         });
+        getContentPane().add(btnCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 210, 147, 76));
 
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jTable1.setModel(this.modelo);
         jTable1.setRowHeight(30);
         jScrollPane1.setViewportView(jTable1);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 815, 218));
+
         cboMoneda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Soles", "Dólares", "Euros" }));
+        getContentPane().add(cboMoneda, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 98, 120, -1));
 
         lblCuota.setText("-");
+        getContentPane().add(lblCuota, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 527, -1, -1));
 
         lblEscudoAnual.setText("-");
+        getContentPane().add(lblEscudoAnual, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 566, -1, -1));
 
         lblValorPresente.setText("jLabel10");
+        getContentPane().add(lblValorPresente, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 605, -1, -1));
 
         lblAhorroFinal.setText("jLabel10");
+        getContentPane().add(lblAhorroFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 644, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(353, 353, 353)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCuota)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btnCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addGap(2, 2, 2)
-                                    .addComponent(txtBien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(20, 20, 20)
-                                    .addComponent(cboMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(44, 44, 44)
-                                    .addComponent(jLabel9)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtN, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(66, 66, 66)
-                                    .addComponent(chkCompra))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(lblEscudoAnual)
-                            .addComponent(lblValorPresente)
-                            .addComponent(lblAhorroFinal))))
-                .addContainerGap(73, Short.MAX_VALUE))
+        jLabel10.setText("Valor Cuota");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(424, 154, -1, -1));
+
+        txtCuota.setEditable(false);
+        getContentPane().add(txtCuota, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 150, 100, -1));
+
+        lblMonedaCuota.setText("-");
+        getContentPane().add(lblMonedaCuota, new org.netbeans.lib.awtextra.AbsoluteConstraints(632, 154, -1, -1));
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Modalidad\n"));
+
+        buttonGroup1.add(rbCompra);
+        rbCompra.setSelected(true);
+        rbCompra.setText("Con Opcion de Compra");
+        rbCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbCompraActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(rbCuota);
+        rbCuota.setText("Con Cuota");
+        rbCuota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbCuotaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbCompra)
+                    .addComponent(rbCuota))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel4)
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel8))
-                    .addComponent(txtBien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cboMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9)
-                        .addComponent(txtN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(chkCompra)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addComponent(lblCuota)
-                .addGap(18, 18, 18)
-                .addComponent(lblEscudoAnual)
-                .addGap(18, 18, 18)
-                .addComponent(lblValorPresente)
-                .addGap(18, 18, 18)
-                .addComponent(lblAhorroFinal)
-                .addContainerGap(19, Short.MAX_VALUE))
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(rbCompra)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbCuota)
+                .addContainerGap(7, Short.MAX_VALUE))
         );
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 90, 230, 110));
 
         pack();
         setLocationRelativeTo(null);
@@ -234,14 +232,28 @@ public class FrmOperativo extends javax.swing.JFrame {
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
         double bien = Double.parseDouble(txtBien.getText());
+        double cuota;
+        if(txtCuota.getText().isEmpty())
+            cuota= 0.0d;
+        else{
+            cuota = Double.parseDouble(txtCuota.getText());
+        }
         int n = Integer.parseInt(txtN.getText());
         double tInteres = Double.parseDouble(txtInteres.getText())/100;
         double tDescuento = Double.parseDouble(txtDescuento.getText())/100;
         double tResidual = Double.parseDouble(txtResidual.getText())/100;
-        boolean opcionCompra = chkCompra.isSelected();
+        boolean opcionCompra = rbCompra.isSelected();
+        Formulas formula = new Formulas(tInteres, bien, cuota, n, tResidual, tDescuento, opcionCompra);
+        //Financiero -> con opcion de compra
+        if(rbCompra.isSelected()){
+            this.mostrarFinanciero(formula);
+        }else{
+            this.mostrarOperativo(formula);
+            
+        }
+            
         
-        Formulas formula = new Formulas(tInteres, bien, n, tResidual, tDescuento, opcionCompra);
-        this.mostrar(formula);
+        
         lblCuota.setText("Cuota: "+String.format(Locale.UK, "%,.2f",formula.getCuota())+" "+cboMoneda.getSelectedItem().toString());
         if(!opcionCompra){
             lblEscudoAnual.setText("Escudo Fiscal Anual: "+String.format(Locale.UK, "%,.2f",formula.getEscudoFiscalXAño())+" "+cboMoneda.getSelectedItem().toString());
@@ -251,9 +263,25 @@ public class FrmOperativo extends javax.swing.JFrame {
         lblValorPresente.setText("Valor Presente: "+String.format(Locale.UK, "%,.2f", formula.getValorPresente())+" "+cboMoneda.getSelectedItem().toString());
         lblAhorroFinal.setText("Ahorro por Leasing: "+String.format(Locale.UK, "%,.2f", formula.getAhorroFinal())+" "+cboMoneda.getSelectedItem().toString());
     }//GEN-LAST:event_btnCalcularActionPerformed
+
+    private void rbCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCompraActionPerformed
+        if(rbCompra.isSelected()){
+            txtCuota.setText("");
+            txtCuota.setEditable(false);
+            txtInteres.setEditable(true);
+        }
+    }//GEN-LAST:event_rbCompraActionPerformed
+
+    private void rbCuotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCuotaActionPerformed
+       if(rbCuota.isSelected()){
+           txtInteres.setText("");
+           txtInteres.setEditable(false);
+           txtCuota.setEditable(true);
+       }
+    }//GEN-LAST:event_rbCuotaActionPerformed
     
     
-    private void mostrar(Formulas f){
+    private void mostrarFinanciero(Formulas f){
         Object datos[][] = new Object[f.getN()+1][5];
         String titulos[] = {"PERIODO","CUOTA","INTERES","AMORTIZACION","SALDO"};
         datos[0][0] = "0";
@@ -268,6 +296,23 @@ public class FrmOperativo extends javax.swing.JFrame {
             datos[i][2] = String.format(Locale.UK, "%,.2f", fila[0]);
             datos[i][3] = String.format(Locale.UK, "%,.2f", fila[1]);
             datos[i][4] = String.format(Locale.UK, "%,.2f", fila[2]);
+        }
+        modelo.setDataVector(datos, titulos);
+    }
+    
+    private void mostrarOperativo(Formulas f){
+        Object datos[][] = new Object[f.getN()+1][4];
+        String titulos[] = {"PERIODO","CUOTA","INTERES","AMORTIZACION"};
+        datos[0][0] = "0";
+        datos[0][1] = "";
+        datos[0][2] = "";
+        datos[0][3] = "";
+        for(int i=1;i<=f.getN();i++){
+            double fila[] = f.getTablaInteres_Amort_Saldo()[i-1];
+            datos[i][0] = i;
+            datos[i][1] = String.format(Locale.UK, "%,.2f", f.getCuota());
+            datos[i][2] = String.format(Locale.UK, "%,.2f", fila[0]);
+            datos[i][3] = String.format(Locale.UK, "%,.2f", fila[1]);
         }
         modelo.setDataVector(datos, titulos);
     }
@@ -308,9 +353,10 @@ public class FrmOperativo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCalcular;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cboMoneda;
-    private javax.swing.JCheckBox chkCompra;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -320,13 +366,18 @@ public class FrmOperativo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblAhorroFinal;
     private javax.swing.JLabel lblCuota;
     private javax.swing.JLabel lblEscudoAnual;
+    private javax.swing.JLabel lblMonedaCuota;
     private javax.swing.JLabel lblValorPresente;
+    private javax.swing.JRadioButton rbCompra;
+    private javax.swing.JRadioButton rbCuota;
     private javax.swing.JTextField txtBien;
+    private javax.swing.JTextField txtCuota;
     private javax.swing.JTextField txtDescuento;
     private javax.swing.JTextField txtInteres;
     private javax.swing.JTextField txtN;

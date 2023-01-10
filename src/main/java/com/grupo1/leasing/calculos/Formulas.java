@@ -13,15 +13,17 @@ import java.util.ArrayList;
 public class Formulas {
     private double tInteres;
     private double valorBien;
-    private double tResidual;
+    private double cuota;
     private int n;
+    private double tResidual;
     private double tDescuento;
     private boolean tieneOpcionCompra;
     private static final double RENTA = 0.295;
     
-    public Formulas(double tInteres, double valorBien, int n, double tResidual, double tDescuento, boolean tieneOpcionCompra){
+    public Formulas(double tInteres, double valorBien, double cuota, int n, double tResidual, double tDescuento, boolean tieneOpcionCompra){
         this.tInteres = tInteres;
         this.valorBien=valorBien;
+        this.cuota = cuota;
         this.tResidual = tResidual;
         this.n = n;
         this.tDescuento = tDescuento;
@@ -57,6 +59,8 @@ public class Formulas {
     }
     
     public double getCuota(){
+        if(this.cuota != 0.0d) return this.cuota;
+        
         double numerador =((valorBien*tInteres*Math.pow(1+tInteres, (double)n))-getValorDeCompra()*tInteres);
         double denominador = (Math.pow(1+tInteres,(double)n)-1);
         return numerador/denominador;
@@ -76,13 +80,13 @@ public class Formulas {
         for(int i=0; i<n;i++){
             double interes = tInteres*saldoAnterior;
             tabla[i][0] = interes;
-            double cuota = getCuota();
-            if(i==(n-1) && tieneOpcionCompra) cuota = getCuotaFinal();
-            double amortizacion = cuota-interes;
+            double cuotaT = getCuota();
+            if(i==(n-1) && tieneOpcionCompra) cuotaT = getCuotaFinal();
+            double amortizacion = cuotaT-interes;
             tabla[i][1] = amortizacion;
             double saldo = saldoAnterior - amortizacion;
             tabla[i][2] = saldo;
-            if(i==(n-1) && tieneOpcionCompra) tabla[i][2] = Math.floor(saldo);
+//            if(i==(n-1) && tieneOpcionCompra) tabla[i][2] = Math.floor(saldo);
             
             saldoAnterior = saldo;
         }
