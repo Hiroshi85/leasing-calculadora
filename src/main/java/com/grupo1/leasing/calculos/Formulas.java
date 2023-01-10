@@ -27,6 +27,34 @@ public class Formulas {
         this.tDescuento = tDescuento;
         this.tieneOpcionCompra = tieneOpcionCompra;
     }
+
+    public double gettInteres() {
+        return tInteres;
+    }
+
+    public double getValorBien() {
+        return valorBien;
+    }
+
+    public double gettResidual() {
+        return tResidual;
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public double gettDescuento() {
+        return tDescuento;
+    }
+
+    public boolean isTieneOpcionCompra() {
+        return tieneOpcionCompra;
+    }
+
+    public static double getRENTA() {
+        return RENTA;
+    }
     
     public double getCuota(){
         double numerador =((valorBien*tInteres*Math.pow(1+tInteres, (double)n))-getValorDeCompra()*tInteres);
@@ -40,11 +68,6 @@ public class Formulas {
     
     public double getValorDeCompra(){
         return this.valorBien*tResidual;
-    }
-    
-    public ArrayList<Double> getAmortizaciones(){
-        ArrayList<Double> amort = new ArrayList<>();
-        return amort;
     }
     
     public double[][] getTablaInteres_Amort_Saldo(){

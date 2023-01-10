@@ -25,7 +25,7 @@ public class LeasingCalculadora {
 //        System.out.println(leasingO.getEscudoFiscalXAño());
 //        System.out.println(leasingO.getValorPresente());
 //        System.out.println(leasingO.getTablaInteres_Amort_Saldo());
-//        FrmOperativo frm = new FrmOperativo();
-//        frm.setVisible(true);
+        FrmOperativo frm = new FrmOperativo();
+        frm.setVisible(true);
     }
 }
