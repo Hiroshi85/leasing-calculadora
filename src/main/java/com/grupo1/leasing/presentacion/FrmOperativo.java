@@ -58,12 +58,10 @@ public class FrmOperativo extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         cboMoneda = new javax.swing.JComboBox<>();
         lblCuota = new javax.swing.JLabel();
-        lblEscudoAnual = new javax.swing.JLabel();
-        lblValorPresente = new javax.swing.JLabel();
         lblAhorroFinal = new javax.swing.JLabel();
+        lblValorPresente = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txtCuota = new javax.swing.JTextField();
-        lblMonedaCuota = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         rbCompra = new javax.swing.JRadioButton();
         rbCuota = new javax.swing.JRadioButton();
@@ -71,20 +69,31 @@ public class FrmOperativo extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Leasing");
         setResizable(false);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Tasas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 16))); // NOI18N
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel1.setText("Interés: ");
 
+        txtInteres.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        txtDescuento.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel2.setText("Descuento: ");
 
+        txtResidual.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("Valor Residual:");
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel5.setText("%");
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel6.setText("%");
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel7.setText("%");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -129,20 +138,19 @@ public class FrmOperativo extends javax.swing.JFrame {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 195, 600, -1));
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Leasing");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 21, 202, -1));
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel8.setText("Valor del Bien: ");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 104, -1, -1));
-        getContentPane().add(txtBien, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 98, 100, -1));
 
+        txtBien.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel9.setText("Número de Periodos: ");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(424, 102, -1, -1));
-        getContentPane().add(txtN, new org.netbeans.lib.awtextra.AbsoluteConstraints(586, 98, 56, -1));
+
+        txtN.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         btnCalcular.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnCalcular.setText("Calcular");
@@ -151,42 +159,31 @@ public class FrmOperativo extends javax.swing.JFrame {
                 btnCalcularActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 210, 147, 76));
 
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jTable1.setModel(this.modelo);
         jTable1.setRowHeight(30);
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 815, 218));
-
+        cboMoneda.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         cboMoneda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Soles", "Dólares", "Euros" }));
-        getContentPane().add(cboMoneda, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 98, 120, -1));
 
-        lblCuota.setText("-");
-        getContentPane().add(lblCuota, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 527, -1, -1));
+        lblCuota.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
 
-        lblEscudoAnual.setText("-");
-        getContentPane().add(lblEscudoAnual, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 566, -1, -1));
+        lblAhorroFinal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
-        lblValorPresente.setText("jLabel10");
-        getContentPane().add(lblValorPresente, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 605, -1, -1));
+        lblValorPresente.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
 
-        lblAhorroFinal.setText("jLabel10");
-        getContentPane().add(lblAhorroFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 644, -1, -1));
-
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel10.setText("Valor Cuota");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(424, 154, -1, -1));
 
         txtCuota.setEditable(false);
-        getContentPane().add(txtCuota, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 150, 100, -1));
-
-        lblMonedaCuota.setText("-");
-        getContentPane().add(lblMonedaCuota, new org.netbeans.lib.awtextra.AbsoluteConstraints(632, 154, -1, -1));
+        txtCuota.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Modalidad\n"));
 
         buttonGroup1.add(rbCompra);
+        rbCompra.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         rbCompra.setSelected(true);
         rbCompra.setText("Con Opcion de Compra");
         rbCompra.addActionListener(new java.awt.event.ActionListener() {
@@ -196,6 +193,7 @@ public class FrmOperativo extends javax.swing.JFrame {
         });
 
         buttonGroup1.add(rbCuota);
+        rbCuota.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         rbCuota.setText("Con Cuota");
         rbCuota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -212,7 +210,7 @@ public class FrmOperativo extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rbCompra)
                     .addComponent(rbCuota))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,7 +222,94 @@ public class FrmOperativo extends javax.swing.JFrame {
                 .addContainerGap(7, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 90, 230, 110));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(353, 353, 353)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(2, 2, 2)
+                                .addComponent(txtBien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(cboMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(44, 44, 44)
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtN, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addGap(22, 22, 22)
+                                        .addComponent(txtCuota, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(2, 2, 2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblValorPresente)
+                                .addGap(75, 75, 75)
+                                .addComponent(lblAhorroFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblCuota)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 815, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel8))
+                            .addComponent(txtBien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(jLabel9))
+                            .addComponent(txtN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(txtCuota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblCuota)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblValorPresente)
+                    .addComponent(lblAhorroFinal))
+                .addContainerGap(93, Short.MAX_VALUE))
+        );
 
         pack();
         setLocationRelativeTo(null);
@@ -239,11 +324,24 @@ public class FrmOperativo extends javax.swing.JFrame {
             cuota = Double.parseDouble(txtCuota.getText());
         }
         int n = Integer.parseInt(txtN.getText());
-        double tInteres = Double.parseDouble(txtInteres.getText())/100;
+        double tInteres;
+        if(txtInteres.getText().isEmpty())
+            tInteres = 0.0d;
+        else{
+             tInteres = Double.parseDouble(txtInteres.getText())/100;
+        }
         double tDescuento = Double.parseDouble(txtDescuento.getText())/100;
-        double tResidual = Double.parseDouble(txtResidual.getText())/100;
+        double tResidual;
+        if(txtResidual.getText().isEmpty()){
+            tResidual = 0.0d;
+        }else{
+            tResidual = Double.parseDouble(txtResidual.getText())/100;
+        }
+        
         boolean opcionCompra = rbCompra.isSelected();
+        
         Formulas formula = new Formulas(tInteres, bien, cuota, n, tResidual, tDescuento, opcionCompra);
+        
         //Financiero -> con opcion de compra
         if(rbCompra.isSelected()){
             this.mostrarFinanciero(formula);
@@ -251,15 +349,8 @@ public class FrmOperativo extends javax.swing.JFrame {
             this.mostrarOperativo(formula);
             
         }
-            
-        
         
         lblCuota.setText("Cuota: "+String.format(Locale.UK, "%,.2f",formula.getCuota())+" "+cboMoneda.getSelectedItem().toString());
-        if(!opcionCompra){
-            lblEscudoAnual.setText("Escudo Fiscal Anual: "+String.format(Locale.UK, "%,.2f",formula.getEscudoFiscalXAño())+" "+cboMoneda.getSelectedItem().toString());
-        }else{
-            lblEscudoAnual.setText("");
-        }
         lblValorPresente.setText("Valor Presente: "+String.format(Locale.UK, "%,.2f", formula.getValorPresente())+" "+cboMoneda.getSelectedItem().toString());
         lblAhorroFinal.setText("Ahorro por Leasing: "+String.format(Locale.UK, "%,.2f", formula.getAhorroFinal())+" "+cboMoneda.getSelectedItem().toString());
     }//GEN-LAST:event_btnCalcularActionPerformed
@@ -269,6 +360,7 @@ public class FrmOperativo extends javax.swing.JFrame {
             txtCuota.setText("");
             txtCuota.setEditable(false);
             txtInteres.setEditable(true);
+            txtResidual.setEditable(true);
         }
     }//GEN-LAST:event_rbCompraActionPerformed
 
@@ -276,6 +368,8 @@ public class FrmOperativo extends javax.swing.JFrame {
        if(rbCuota.isSelected()){
            txtInteres.setText("");
            txtInteres.setEditable(false);
+           txtResidual.setText("");
+           txtResidual.setEditable(false);
            txtCuota.setEditable(true);
        }
     }//GEN-LAST:event_rbCuotaActionPerformed
@@ -301,18 +395,14 @@ public class FrmOperativo extends javax.swing.JFrame {
     }
     
     private void mostrarOperativo(Formulas f){
-        Object datos[][] = new Object[f.getN()+1][4];
-        String titulos[] = {"PERIODO","CUOTA","INTERES","AMORTIZACION"};
-        datos[0][0] = "0";
-        datos[0][1] = "";
-        datos[0][2] = "";
-        datos[0][3] = "";
-        for(int i=1;i<=f.getN();i++){
-            double fila[] = f.getTablaInteres_Amort_Saldo()[i-1];
-            datos[i][0] = i;
+        Object datos[][] = new Object[f.getN()][4];
+        String titulos[] = {"PERIODO","CUOTA","ESCUDO FISCAL","CUOTA TOTAL ANUAL"};
+        for(int i=0;i<f.getN();i++){
+            datos[i][0] = i+1;
             datos[i][1] = String.format(Locale.UK, "%,.2f", f.getCuota());
-            datos[i][2] = String.format(Locale.UK, "%,.2f", fila[0]);
-            datos[i][3] = String.format(Locale.UK, "%,.2f", fila[1]);
+            datos[i][2] = String.format(Locale.UK, "%,.2f", f.getEscudoFiscalXAño());
+            double flujoNeto = f.getCuota()-f.getEscudoFiscalXAño();
+            datos[i][3] = String.format(Locale.UK, "%,.2f", flujoNeto);
         }
         modelo.setDataVector(datos, titulos);
     }
@@ -371,8 +461,6 @@ public class FrmOperativo extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblAhorroFinal;
     private javax.swing.JLabel lblCuota;
-    private javax.swing.JLabel lblEscudoAnual;
-    private javax.swing.JLabel lblMonedaCuota;
     private javax.swing.JLabel lblValorPresente;
     private javax.swing.JRadioButton rbCompra;
     private javax.swing.JRadioButton rbCuota;
