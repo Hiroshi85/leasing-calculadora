@@ -4,8 +4,7 @@
  */
 
 package com.grupo1.leasing;
-import com.grupo1.leasing.calculos.Formulas;
-import com.grupo1.leasing.presentacion.FrmOperativo;
+import com.grupo1.leasing.presentacion.FrmCalculadora;
 /**
  *
  * @author hiros
@@ -13,7 +12,7 @@ import com.grupo1.leasing.presentacion.FrmOperativo;
 public class LeasingCalculadora {
 
     public static void main(String[] args) {
-        FrmOperativo frm = new FrmOperativo();
+        FrmCalculadora frm = new FrmCalculadora();
         frm.setVisible(true);
     }
 }
