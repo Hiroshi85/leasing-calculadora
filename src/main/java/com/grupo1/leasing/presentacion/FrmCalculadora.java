@@ -66,6 +66,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
         rbCompra = new javax.swing.JRadioButton();
         rbCuota = new javax.swing.JRadioButton();
         jLabel11 = new javax.swing.JLabel();
+        lblValorCompra = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Leasing");
@@ -169,7 +170,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
         cboMoneda.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         cboMoneda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Soles", "Dólares", "Euros" }));
 
-        lblCuota.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        lblCuota.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         lblAhorroFinal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
@@ -226,6 +227,8 @@ public class FrmCalculadora extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel11.setText("(en años)");
 
+        lblValorCompra.setFont(new java.awt.Font("Segoe UI", 2, 17)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -267,12 +270,15 @@ public class FrmCalculadora extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 849, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblValorPresente)
-                                .addGap(75, 75, 75)
-                                .addComponent(lblAhorroFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblCuota)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 849, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblValorPresente)
+                                    .addComponent(lblCuota))
+                                .addGap(57, 57, 57)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblValorCompra)
+                                    .addComponent(lblAhorroFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(47, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -309,12 +315,14 @@ public class FrmCalculadora extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblCuota)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCuota)
+                    .addComponent(lblValorCompra))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblValorPresente)
                     .addComponent(lblAhorroFinal))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addGap(18, 89, Short.MAX_VALUE))
         );
 
         pack();
@@ -351,6 +359,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
         //Financiero -> con opcion de compra
         if(rbCompra.isSelected()){
             this.mostrarFinanciero(formula);
+            lblValorCompra.setText("Valor de Compra: "+String.format(Locale.UK, "%,.2f", formula.getValorDeCompra())+" "+cboMoneda.getSelectedItem().toString());
         }else{
             this.mostrarOperativo(formula);
             
@@ -392,7 +401,10 @@ public class FrmCalculadora extends javax.swing.JFrame {
         for(int i=1;i<=f.getN();i++){
             double fila[] = f.getTablaInteres_Amort_Saldo()[i-1];
             datos[i][0] = i;
-            datos[i][1] = String.format(Locale.UK, "%,.2f", f.getCuota());
+            if(i!=f.getN())
+                datos[i][1] = String.format(Locale.UK, "%,.2f", f.getCuota());
+            else
+                datos[i][1] = String.format(Locale.UK, "%,.2f", f.getCuotaFinal());
             datos[i][2] = String.format(Locale.UK, "%,.2f", fila[0]);
             datos[i][3] = String.format(Locale.UK, "%,.2f", fila[1]);
             datos[i][4] = String.format(Locale.UK, "%,.2f", fila[2]);
@@ -469,6 +481,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblAhorroFinal;
     private javax.swing.JLabel lblCuota;
+    private javax.swing.JLabel lblValorCompra;
     private javax.swing.JLabel lblValorPresente;
     private javax.swing.JRadioButton rbCompra;
     private javax.swing.JRadioButton rbCuota;
