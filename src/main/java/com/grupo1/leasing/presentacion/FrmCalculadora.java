@@ -274,8 +274,6 @@ public class FrmCalculadora extends javax.swing.JFrame {
 
         lblDesembolso.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
 
-        lblFormato.setText("aa");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -328,7 +326,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
                                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(67, 67, 67)
+                                        .addGap(88, 88, 88)
                                         .addComponent(lblFormato))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
