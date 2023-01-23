@@ -74,6 +74,9 @@ public class FrmCalculadora extends javax.swing.JFrame {
         cboPeriodo = new javax.swing.JComboBox<>();
         lblMonedaCuota = new javax.swing.JLabel();
         btnCalcular = new javax.swing.JButton();
+        lblDesembolso = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        lblFormato = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Leasing");
@@ -94,7 +97,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
         txtResidual.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel3.setText("Opcion de Compra:");
+        jLabel3.setText("Opción de Compra:");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel5.setText("%");
@@ -193,12 +196,12 @@ public class FrmCalculadora extends javax.swing.JFrame {
 
         lblCuota.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
-        lblAhorroFinal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblAhorroFinal.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
 
         lblValorPresente.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel10.setText("Valor Cuota:");
+        jLabel10.setText("Valor de Cuota:");
 
         txtCuota.setEditable(false);
         txtCuota.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -208,7 +211,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
         buttonGroup1.add(rbCompra);
         rbCompra.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         rbCompra.setSelected(true);
-        rbCompra.setText("Con Opcion de Compra");
+        rbCompra.setText("Con Opción de Compra");
         rbCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbCompraActionPerformed(evt);
@@ -269,6 +272,10 @@ public class FrmCalculadora extends javax.swing.JFrame {
             }
         });
 
+        lblDesembolso.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+
+        lblFormato.setText("aa");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -279,15 +286,6 @@ public class FrmCalculadora extends javax.swing.JFrame {
                         .addGap(353, 353, 353)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblValorPresente)
-                            .addComponent(lblCuota))
-                        .addGap(57, 57, 57)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblValorCompra)
-                            .addComponent(lblAhorroFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 849, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -296,20 +294,23 @@ public class FrmCalculadora extends javax.swing.JFrame {
                                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(10, 10, 10)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jLabel8)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(txtBien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(14, 14, 14)
-                                                .addComponent(cboMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(txtBien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(4, 4, 4)
                                                 .addComponent(jLabel10)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(txtCuota)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(14, 14, 14)
+                                                .addComponent(cboMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
                                                 .addGap(18, 18, 18)
-                                                .addComponent(txtCuota, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(lblMonedaCuota)))
+                                                .addComponent(lblMonedaCuota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                         .addGap(30, 30, 30)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addGroup(layout.createSequentialGroup()
@@ -320,11 +321,30 @@ public class FrmCalculadora extends javax.swing.JFrame {
                                                 .addComponent(jLabel9)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(txtN, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(67, 67, 67)
+                                        .addComponent(lblFormato))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblDesembolso)
+                                .addGap(35, 35, 35)
+                                .addComponent(lblCuota)
+                                .addGap(54, 54, 54)
+                                .addComponent(lblValorCompra))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblAhorroFinal)
+                                .addGap(31, 31, 31)
+                                .addComponent(lblValorPresente))
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 844, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,11 +352,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel4)
                 .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cboMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -352,18 +368,28 @@ public class FrmCalculadora extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(txtN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(36, 36, 36)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblFormato)
+                        .addGap(2, 2, 2)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCuota)
-                    .addComponent(lblValorCompra))
-                .addGap(26, 26, 26)
+                    .addComponent(lblValorCompra)
+                    .addComponent(lblDesembolso))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblValorPresente)
                     .addComponent(lblAhorroFinal))
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addGap(38, 38, 38))
         );
 
         pack();
@@ -375,6 +401,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
             double bien = Double.parseDouble(txtBien.getText());
             double cuota;
             String formato = getFormatoMoneda(cboMoneda.getSelectedIndex());
+            lblFormato.setText("Valores en "+cboMoneda.getSelectedItem().toString().toLowerCase());
             if(txtCuota.getText().isEmpty())
                 cuota= 0.0d;
             else{
@@ -386,7 +413,6 @@ public class FrmCalculadora extends javax.swing.JFrame {
                 tInteres = 0.0d;
             else{
                 tInteres = Helper.convertirInteres(Double.parseDouble(txtInteres.getText())/100, n, cboPeriodo.getSelectedIndex(), cboTasaOrigen.getSelectedIndex());
-                System.out.println(tInteres);
             }
             double tDescuento = Double.parseDouble(txtDescuento.getText())/100;
             double tResidual;
@@ -403,12 +429,15 @@ public class FrmCalculadora extends javax.swing.JFrame {
             //Financiero -> con opcion de compra
             if(rbCompra.isSelected()){
                 this.mostrarFinanciero(formula);
+                lblValorCompra.setVisible(true);
                 lblValorCompra.setText("Valor de Compra: "+formato+String.format(Locale.UK, "%,.2f", formula.getValorDeCompra()));
             }else{
                 this.mostrarOperativo(formula);
-
+                lblValorCompra.setText("");
+                lblValorCompra.setVisible(false);
             }
             
+            lblDesembolso.setText("Desembolso total: "+formato+String.format(Locale.UK, "%,.2f",formula.getDesembolso()));
             lblCuota.setText("Cuota: "+formato+String.format(Locale.UK, "%,.2f",formula.getCuota()));
             lblValorPresente.setText("Valor Presente: "+formato+String.format(Locale.UK, "%,.2f", formula.getValorPresente()));
             lblAhorroFinal.setText("Ahorro por Leasing: "+formato+String.format(Locale.UK, "%,.2f", formula.getAhorroFinal()));
@@ -476,7 +505,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
     
     private void mostrarFinanciero(Formulas f){
         Object datos[][] = new Object[f.getN()+1][5];
-        String titulos[] = {"PERIODO","CUOTA","INTERES","AMORTIZACION","SALDO"};
+        String titulos[] = {"PERIODO","CUOTA","INTERÉS","AMORTIZACIÓN","SALDO"};
         datos[0][0] = "0";
         datos[0][1] = "";
         datos[0][2] = "";
@@ -502,9 +531,8 @@ public class FrmCalculadora extends javax.swing.JFrame {
         for(int i=0;i<f.getN();i++){
             datos[i][0] = i+1;
             datos[i][1] = String.format(Locale.UK, "%,.2f", f.getCuota());
-            datos[i][2] = String.format(Locale.UK, "%,.2f", f.getEscudoFiscalXAño());
-            double flujoNeto = f.getCuota()-f.getEscudoFiscalXAño();
-            datos[i][3] = String.format(Locale.UK, "%,.2f", flujoNeto);
+            datos[i][2] = "("+String.format(Locale.UK, "%,.2f", f.getEscudoFiscalXAño())+")";
+            datos[i][3] = String.format(Locale.UK, "%,.2f", f.getFlujoNetoPeriodo());
         }
         modelo.setDataVector(datos, titulos);
     }
@@ -565,9 +593,12 @@ public class FrmCalculadora extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblAhorroFinal;
     private javax.swing.JLabel lblCuota;
+    private javax.swing.JLabel lblDesembolso;
+    private javax.swing.JLabel lblFormato;
     private javax.swing.JLabel lblMonedaCuota;
     private javax.swing.JLabel lblValorCompra;
     private javax.swing.JLabel lblValorPresente;

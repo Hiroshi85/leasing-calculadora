@@ -59,15 +59,22 @@ public class Formulas {
     }
     
     public double getCuota(){
-        if(this.cuota != 0.0d) return this.cuota;
+        if(tieneOpcionCompra){
+            double numerador =((valorBien*tInteres*Math.pow(1+tInteres, (double)n))-getValorDeCompra()*tInteres);
+            double denominador = (Math.pow(1+tInteres,(double)n)-1);
+            
+            this.cuota = numerador/denominador;
+        }
         
-        double numerador =((valorBien*tInteres*Math.pow(1+tInteres, (double)n))-getValorDeCompra()*tInteres);
-        double denominador = (Math.pow(1+tInteres,(double)n)-1);
-        return numerador/denominador;
+        return this.cuota;
     }
     
     public double getCuotaFinal(){
         return this.getCuota()+getValorDeCompra();
+    }
+    
+    public double getFlujoNetoPeriodo(){
+        return this.getCuota()-getEscudoFiscalXAño();
     }
     
     public double getValorDeCompra(){
@@ -81,12 +88,11 @@ public class Formulas {
             double interes = tInteres*saldoAnterior;
             tabla[i][0] = interes;
             double cuotaT = getCuota();
-            if(i==(n-1) && tieneOpcionCompra) cuotaT = getCuotaFinal();
+            if(i==(n-1)) cuotaT = getCuotaFinal();
             double amortizacion = cuotaT-interes;
             tabla[i][1] = amortizacion;
             double saldo = saldoAnterior - amortizacion;
             tabla[i][2] = saldo;
-//            if(i==(n-1) && tieneOpcionCompra) tabla[i][2] = Math.floor(saldo);
             
             saldoAnterior = saldo;
         }
@@ -114,5 +120,17 @@ public class Formulas {
     public double getAhorroFinal(){
         //true = financiero
         return valorBien - getValorPresente();
+    }
+    
+    public double getDesembolso(){
+        double total;
+        if(tieneOpcionCompra){
+            total=getCuota()*(n-1)+getCuotaFinal();    
+        }else{
+            total = getFlujoNetoPeriodo()*n;
+        }
+        
+        
+        return total;
     }
 }
