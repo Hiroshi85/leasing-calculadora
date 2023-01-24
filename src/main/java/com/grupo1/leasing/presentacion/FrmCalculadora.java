@@ -13,6 +13,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
@@ -21,6 +22,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class FrmCalculadora extends javax.swing.JFrame {
 
+    private Formulas formula;
+    private double InteresTotal;
+    private double AmortTotal;
+    
     DefaultTableModel modelo = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -445,7 +450,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
 
                 boolean opcionCompra = rbCompra.isSelected();
 
-                Formulas formula = new Formulas(tInteres, bien, cuota, n, tResidual, tDescuento, opcionCompra);
+                formula = new Formulas(tInteres, bien, cuota, n, tResidual, tDescuento, opcionCompra);
 
                 //Financiero -> con opcion de compra
                 if (rbCompra.isSelected()) {
@@ -501,34 +506,26 @@ public class FrmCalculadora extends javax.swing.JFrame {
     private void cboMonedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMonedaActionPerformed
         lblMonedaCuota.setText(cboMoneda.getSelectedItem().toString());
     }//GEN-LAST:event_cboMonedaActionPerformed
-    
-    private void resultados(XSSFWorkbook wk, Sheet sheet){
-        int rowCount = 3;
-        int colCount = 1;
-        
-        
-    } 
-            
-    private void table(XSSFWorkbook wk, Sheet sheet, String[] titulos, CellStyle headers) {
 
-        for (int i = 2; i < 6; i++) {
+    private void table(XSSFWorkbook wk, Sheet sheet, String[] titulos) {
+
+        for (int i = 1; i < 6; i++) {
             sheet.setColumnWidth(i, 5000);
         }
-        //Formato de número
-        //DataFormat format = wk.createDataFormat();
+
         //Estilos de celda
         CellStyle style1 = wk.createCellStyle();
         style1.setDataFormat(wk.createDataFormat().getFormat("#,##0.00"));
         style1.setAlignment(HorizontalAlignment.CENTER); //Funciona con POI versión 5.2.3
-        
-        int rowCount = 23;
+
+        int rowCount = 16;
         int colCount = 1;
 
         Row row0 = sheet.createRow(rowCount - 1);
         for (String titulo : titulos) {
             Cell cell0 = row0.createCell(colCount++);
             cell0.setCellValue(titulo);
-            cell0.setCellStyle(headers);
+            cell0.setCellStyle(headers(wk));
         }
         colCount = 1;
         for (int i = 0; i < jTable1.getRowCount(); i++) {
@@ -570,36 +567,128 @@ public class FrmCalculadora extends javax.swing.JFrame {
     }
 
     private void exportFinanciero(XSSFWorkbook wk, Sheet sheet) {
-       //Información de resultados generales de leasing financiero
-       
+        //Información de resultados generales de leasing financiero
+
+        int rowCount = 2;
+        int colCount = 1;
+        String moneda = cboMoneda.getSelectedItem().toString();
+
+        Row row = sheet.createRow(rowCount);
+        Cell cell = row.createCell(colCount);
+
+        cell.setCellValue("Cronograma");
+        cell.setCellStyle(titleStyle(wk));
+
+        cell = row.createCell(colCount + 1);
+        cell.setCellValue(moneda);
+        cell.setCellStyle(titleStyle(wk));
+        // Tasa original
+        row = sheet.createRow(rowCount + 1);
+        cell = row.createCell(colCount);
+        cell.setCellValue("Tasa de Interés Efectiva " + cboTasaOrigen.getSelectedItem().toString() + " (%)");
+        cell.setCellStyle(bold(wk));
+        row.createCell(colCount + 2).setCellValue(Double.parseDouble(txtInteres.getText()));
+
+        row = sheet.createRow(rowCount + 2);
+
+        cell = row.createCell(colCount);
+        cell.setCellValue("Tasa de Interés Efectiva " + cboPeriodo.getSelectedItem().toString() + " (360 días)");
+        cell.setCellStyle(bold(wk));
+        row.createCell(colCount + 2).setCellValue((double) formula.gettInteres() * 100);
+
+        row = sheet.createRow(rowCount + 4);
+        String hTotales[] = {"Cuota", "Amortizaciones", "Interés"};
+        colCount = 2;
+        for (int i = 0; i < hTotales.length; i++) {
+            cell = row.createCell(colCount++);
+            cell.setCellValue(hTotales[i]);
+            cell.setCellStyle(titleStyle(wk));
+        }
+        colCount = 1;
+        row = sheet.createRow(rowCount + 5);
+        row.createCell(colCount).setCellValue("Totales a Pagar");
+        row.createCell(colCount + 1).setCellValue(formula.getDesembolso()); //Desembolso total
+
+        row.createCell(colCount + 2).setCellValue(AmortTotal); //Total Amort.
+        row.createCell(colCount + 3).setCellValue(InteresTotal);//Total Intereses
+
+        row = sheet.createRow(rowCount + 8);
+        row.createCell(colCount).setCellValue("Cuota " + cboPeriodo.getSelectedItem().toString());
+        row.createCell(colCount + 1).setCellValue(formula.getCuota());
+
+        row = sheet.createRow(rowCount + 9);
+        row.createCell(colCount).setCellValue("Opción de Compra");
+        row.createCell(colCount + 1).setCellValue(formula.getValorDeCompra());
+        row = sheet.createRow(rowCount + 10);
+        row.createCell(colCount).setCellValue("Valor Presente");
+        row.createCell(colCount + 1).setCellValue(formula.getValorPresente());
+        row = sheet.createRow(rowCount + 11);
+        row.createCell(colCount).setCellValue("Ahorro");
+        row.createCell(colCount + 1).setCellValue(formula.getAhorroFinal());
+
+        // Estilo a un grupo de celdas
+        for (int i = 6; i < 15; i++) {
+            Row r = sheet.getRow(i);
+            if (r != null) {
+                Cell c = r.getCell(colCount);
+                if (c != null) {
+                    c.setCellStyle(bold(wk));
+                }
+            }
+        }
     }
 
     private void exportOperativo(XSSFWorkbook wk, Sheet sheet) {
-       //Información de resultados generales de leasing operativo 
+        //Información de resultados generales de leasing operativo 
     }
-    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
-        XSSFWorkbook wk = new XSSFWorkbook();
-        Sheet sheet = wk.createSheet("leasing-reporte");
-        
-         //Headers
+
+    private CellStyle bold(XSSFWorkbook wk) {
+        CellStyle bold = wk.createCellStyle();
+        Font font = wk.createFont();
+        font.setBold(true);
+        bold.setFont(font);
+        return bold;
+    }
+
+    private CellStyle headers(XSSFWorkbook wk) {
         CellStyle headers = wk.createCellStyle();
+        headers.setBorderBottom(BorderStyle.THICK);
         Font font = wk.createFont();
         font.setBold(true);
         font.setFontHeightInPoints((short) 12);
         headers.setAlignment(HorizontalAlignment.CENTER); //Funciona con POI versión 5.2.3
         headers.setFont(font);
-               
-        String[] titulos;
-        if (rbCompra.isSelected()){
-            titulos = new String[] {"PERIODO", "CUOTA", "INTERÉS", "AMORTIZACIÓN", "SALDO"};
-            exportFinanciero(wk, sheet);
-        }else{
-            titulos = new String[] {"PERIODO", "CUOTA", "ESCUDO FISCAL", "CUOTA TOTAL ANUAL"};
-            exportOperativo(wk, sheet);
+        return headers;
+    }
+
+    private CellStyle titleStyle(XSSFWorkbook wk) {
+        CellStyle titleStyle = wk.createCellStyle();
+        Font font = wk.createFont();
+        font.setColor(IndexedColors.ORANGE.getIndex());
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 12);
+        titleStyle.setAlignment(HorizontalAlignment.CENTER); //Funciona con POI versión 5.2.3
+        titleStyle.setFont(font);
+        return titleStyle;
+    }
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        if (formula != null) {
+            XSSFWorkbook wk = new XSSFWorkbook();
+            Sheet sheet = wk.createSheet("leasing-reporte");
+
+            //Headers
+            String[] titulos;
+            if (rbCompra.isSelected()) {
+                titulos = new String[]{"PERIODO", "CUOTA", "INTERÉS", "AMORTIZACIÓN", "SALDO"};
+                exportFinanciero(wk, sheet);
+            } else {
+                titulos = new String[]{"PERIODO", "CUOTA", "ESCUDO FISCAL", "CUOTA TOTAL ANUAL"};
+                exportOperativo(wk, sheet);
+            }
+
+            table(wk, sheet, titulos);
+            fileChooser(wk);
         }
-               
-        table(wk, sheet, titulos, headers);
-        fileChooser(wk);
     }//GEN-LAST:event_btnExportActionPerformed
 
     private String getFormatoMoneda(int ixMoneda) {
@@ -633,6 +722,8 @@ public class FrmCalculadora extends javax.swing.JFrame {
     }
 
     private void mostrarFinanciero(Formulas f) {
+        InteresTotal = 0.0;
+        AmortTotal = 0.0;
         Object datos[][] = new Object[f.getN() + 1][5];
         String titulos[] = {"PERIODO", "CUOTA", "INTERÉS", "AMORTIZACIÓN", "SALDO"};
         datos[0][0] = "0";
@@ -649,7 +740,9 @@ public class FrmCalculadora extends javax.swing.JFrame {
                 datos[i][1] = String.format(Locale.UK, "%,.2f", f.getCuotaFinal());
             }
             datos[i][2] = String.format(Locale.UK, "%,.2f", fila[0]);
+            InteresTotal += fila[0];
             datos[i][3] = String.format(Locale.UK, "%,.2f", fila[1]);
+            AmortTotal += fila[1];
             datos[i][4] = String.format(Locale.UK, "%,.2f", fila[2]);
         }
         modelo.setDataVector(datos, titulos);
