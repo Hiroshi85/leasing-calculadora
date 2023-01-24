@@ -519,7 +519,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
         //Estilos de celda
         CellStyle style1 = wk.createCellStyle();
         style1.setDataFormat(wk.createDataFormat().getFormat("#,##0.00"));
-        //style1.setAlignment((short)1);
+        style1.setAlignment(HorizontalAlignment.CENTER); //Funciona con POI versión 5.2.3
         
         int rowCount = 23;
         int colCount = 1;
@@ -584,9 +584,9 @@ public class FrmCalculadora extends javax.swing.JFrame {
          //Headers
         CellStyle headers = wk.createCellStyle();
         Font font = wk.createFont();
-        font.setBoldweight((short)1);
+        font.setBold(true);
         font.setFontHeightInPoints((short) 12);
-        //headers.setAlignment(HorizontalAlignment.CENTER);
+        headers.setAlignment(HorizontalAlignment.CENTER); //Funciona con POI versión 5.2.3
         headers.setFont(font);
                
         String[] titulos;
