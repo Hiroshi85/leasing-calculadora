@@ -395,54 +395,59 @@ public class FrmCalculadora extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
-        if(validarCalcular()){
-            double bien = Double.parseDouble(txtBien.getText());
-            double cuota;
-            String formato = getFormatoMoneda(cboMoneda.getSelectedIndex());
-            lblFormato.setText("Valores en "+cboMoneda.getSelectedItem().toString().toLowerCase());
-            if(txtCuota.getText().isEmpty())
-                cuota= 0.0d;
-            else{
-                cuota = Double.parseDouble(txtCuota.getText());
-            }
-            int n = Integer.parseInt(txtN.getText());
-            double tInteres;
-            if(txtInteres.getText().isEmpty())
-                tInteres = 0.0d;
-            else{
-                tInteres = Helper.convertirInteres(Double.parseDouble(txtInteres.getText())/100, n, cboPeriodo.getSelectedIndex(), cboTasaOrigen.getSelectedIndex());
-            }
-            double tDescuento = Double.parseDouble(txtDescuento.getText())/100;
-            double tResidual;
-            if(txtResidual.getText().isEmpty()){
-                tResidual = 0.0d;
-            }else{
-                tResidual = Double.parseDouble(txtResidual.getText())/100;
-            }
+        try {
+            if (validarCalcular()) {
+                double bien = Double.parseDouble(txtBien.getText());
+                double cuota;
+                String formato = getFormatoMoneda(cboMoneda.getSelectedIndex());
+                lblFormato.setText("Valores en " + cboMoneda.getSelectedItem().toString().toLowerCase());
+                if (txtCuota.getText().isEmpty()) {
+                    cuota = 0.0d;
+                } else {
+                    cuota = Double.parseDouble(txtCuota.getText());
+                }
+                int n = Integer.parseInt(txtN.getText());
+                double tInteres;
+                if (txtInteres.getText().isEmpty()) {
+                    tInteres = 0.0d;
+                } else {
+                    tInteres = Helper.convertirInteres(Double.parseDouble(txtInteres.getText()) / 100, n, cboPeriodo.getSelectedIndex(), cboTasaOrigen.getSelectedIndex());
+                }
+                double tDescuento = Double.parseDouble(txtDescuento.getText()) / 100;
+                double tResidual;
+                if (txtResidual.getText().isEmpty()) {
+                    tResidual = 0.0d;
+                } else {
+                    tResidual = Double.parseDouble(txtResidual.getText()) / 100;
+                }
 
-            boolean opcionCompra = rbCompra.isSelected();
+                boolean opcionCompra = rbCompra.isSelected();
 
-            Formulas formula = new Formulas(tInteres, bien, cuota, n, tResidual, tDescuento, opcionCompra);
+                Formulas formula = new Formulas(tInteres, bien, cuota, n, tResidual, tDescuento, opcionCompra);
 
-            //Financiero -> con opcion de compra
-            if(rbCompra.isSelected()){
-                this.mostrarFinanciero(formula);
-                lblValorCompra.setVisible(true);
-                lblValorCompra.setText("Valor de Compra: "+formato+String.format(Locale.UK, "%,.2f", formula.getValorDeCompra()));
-            }else{
-                this.mostrarOperativo(formula);
-                lblValorCompra.setText("");
-                lblValorCompra.setVisible(false);
+                //Financiero -> con opcion de compra
+                if (rbCompra.isSelected()) {
+                    this.mostrarFinanciero(formula);
+                    lblValorCompra.setVisible(true);
+                    lblValorCompra.setText("Valor de Compra: " + formato + String.format(Locale.UK, "%,.2f", formula.getValorDeCompra()));
+                } else {
+                    this.mostrarOperativo(formula);
+                    lblValorCompra.setText("");
+                    lblValorCompra.setVisible(false);
+                }
+
+                lblDesembolso.setText("Desembolso total: " + formato + String.format(Locale.UK, "%,.2f", formula.getDesembolso()));
+                lblCuota.setText("Cuota: " + formato + String.format(Locale.UK, "%,.2f", formula.getCuota()));
+                lblValorPresente.setText("Valor Presente: " + formato + String.format(Locale.UK, "%,.2f", formula.getValorPresente()));
+                lblAhorroFinal.setText("Ahorro por Leasing: " + formato + String.format(Locale.UK, "%,.2f", formula.getAhorroFinal()));
+            } else {
+                JOptionPane.showMessageDialog(null, "Revise que las entradas no esten vacias", "Alerta", JOptionPane.ERROR_MESSAGE);
             }
-            
-            lblDesembolso.setText("Desembolso total: "+formato+String.format(Locale.UK, "%,.2f",formula.getDesembolso()));
-            lblCuota.setText("Cuota: "+formato+String.format(Locale.UK, "%,.2f",formula.getCuota()));
-            lblValorPresente.setText("Valor Presente: "+formato+String.format(Locale.UK, "%,.2f", formula.getValorPresente()));
-            lblAhorroFinal.setText("Ahorro por Leasing: "+formato+String.format(Locale.UK, "%,.2f", formula.getAhorroFinal()));
-        }else{
-            JOptionPane.showMessageDialog(null, "Revise que las entradas no esten vacias", "Alerta", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Algunos de los campos contiene un valor no válido, verifique e inténtelo nuevamente", "Alerta",JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        
     }//GEN-LAST:event_btnCalcularActionPerformed
 
     private void rbCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCompraActionPerformed
