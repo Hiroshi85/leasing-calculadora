@@ -6,23 +6,34 @@ package com.grupo1.leasing.presentacion;
 
 import com.grupo1.leasing.calculos.Formulas;
 import com.grupo1.leasing.helpers.Helper;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Locale;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
  * @author hiros
  */
 public class FrmCalculadora extends javax.swing.JFrame {
+
+    private Formulas formula;
+    private double InteresTotal;
+    private double AmortTotal;
     
-    DefaultTableModel modelo = new DefaultTableModel(){
+    DefaultTableModel modelo = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
         }
     };
-    
+
     /**
      * Creates new form FrmOperativo
      */
@@ -77,6 +88,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
         lblDesembolso = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lblFormato = new javax.swing.JLabel();
+        btnExport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Leasing");
@@ -274,6 +286,14 @@ public class FrmCalculadora extends javax.swing.JFrame {
 
         lblDesembolso.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
 
+        btnExport.setText("Exportar (.xls)");
+        btnExport.setName(""); // NOI18N
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -321,13 +341,16 @@ public class FrmCalculadora extends javax.swing.JFrame {
                                                 .addComponent(txtN, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGap(88, 88, 88)
+                                        .addComponent(lblFormato))
+                                    .addGroup(layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(88, 88, 88)
-                                        .addComponent(lblFormato))))))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,11 +360,11 @@ public class FrmCalculadora extends javax.swing.JFrame {
                                 .addComponent(lblCuota)
                                 .addGap(54, 54, 54)
                                 .addComponent(lblValorCompra))
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 844, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblAhorroFinal)
                                 .addGap(31, 31, 31)
-                                .addComponent(lblValorPresente))
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 844, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(lblValorPresente)))))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -381,13 +404,18 @@ public class FrmCalculadora extends javax.swing.JFrame {
                     .addComponent(lblCuota)
                     .addComponent(lblValorCompra)
                     .addComponent(lblDesembolso))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblValorPresente)
-                    .addComponent(lblAhorroFinal))
-                .addGap(38, 38, 38))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblValorPresente)
+                            .addComponent(lblAhorroFinal)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(37, 37, 37))
         );
 
         pack();
@@ -423,7 +451,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
 
                 boolean opcionCompra = rbCompra.isSelected();
 
-                Formulas formula = new Formulas(tInteres, bien, cuota, n, tResidual, tDescuento, opcionCompra);
+                formula = new Formulas(tInteres, bien, cuota, n, tResidual, tDescuento, opcionCompra);
 
                 //Financiero -> con opcion de compra
                 if (rbCompra.isSelected()) {
@@ -436,7 +464,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
                     lblValorCompra.setVisible(false);
                 }
 
-                lblDesembolso.setText("Desembolso total: " + formato + String.format(Locale.UK, "%,.2f", formula.getDesembolso()));
+                lblDesembolso.setText("Costo total: " + formato + String.format(Locale.UK, "%,.2f", formula.getDesembolso()));
                 lblCuota.setText("Cuota: " + formato + String.format(Locale.UK, "%,.2f", formula.getCuota()));
                 lblValorPresente.setText("Valor Presente: " + formato + String.format(Locale.UK, "%,.2f", formula.getValorPresente()));
                 lblAhorroFinal.setText("Ahorro por Leasing: " + formato + String.format(Locale.UK, "%,.2f", formula.getAhorroFinal()));
@@ -444,14 +472,14 @@ public class FrmCalculadora extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Revise que las entradas no esten vacias", "Alerta", JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Algunos de los campos contiene un valor no válido, verifique e inténtelo nuevamente", "Alerta",JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Algunos de los campos contiene un valor no válido, verifique e inténtelo nuevamente", "Alerta", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_btnCalcularActionPerformed
 
     private void rbCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCompraActionPerformed
-        if(rbCompra.isSelected()){
+        if (rbCompra.isSelected()) {
             txtCuota.setText("");
             txtCuota.setEditable(false);
             txtInteres.setEditable(true);
@@ -461,80 +489,351 @@ public class FrmCalculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_rbCompraActionPerformed
 
     private void rbCuotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCuotaActionPerformed
-       if(rbCuota.isSelected()){
-           txtInteres.setText("");
-           txtInteres.setEditable(false);
-           txtResidual.setText("");
-           txtResidual.setEditable(false);
-           txtCuota.setEditable(true);
-           cboTasaOrigen.setSelectedIndex(0);
-           cboTasaOrigen.setEnabled(false);
-       }
+        if (rbCuota.isSelected()) {
+            txtInteres.setText("");
+            txtInteres.setEditable(false);
+            txtResidual.setText("");
+            txtResidual.setEditable(false);
+            txtCuota.setEditable(true);
+            cboTasaOrigen.setSelectedIndex(0);
+            cboTasaOrigen.setEnabled(false);
+        }
     }//GEN-LAST:event_rbCuotaActionPerformed
 
     private void cboPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboPeriodoActionPerformed
-        
+
     }//GEN-LAST:event_cboPeriodoActionPerformed
 
     private void cboMonedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMonedaActionPerformed
         lblMonedaCuota.setText(cboMoneda.getSelectedItem().toString());
     }//GEN-LAST:event_cboMonedaActionPerformed
+
+    private void table(XSSFWorkbook wk, Sheet sheet, String[] titulos) {
+
+        for (int i = 1; i < 6; i++) {
+            sheet.setColumnWidth(i, 5000);
+        }
+
+        //Estilos de celda
+        CellStyle style1 = wk.createCellStyle();
+        style1.setDataFormat(wk.createDataFormat().getFormat("#,##0.00"));
+        style1.setAlignment(HorizontalAlignment.CENTER); //Funciona con POI versión 5.2.3
+
+        int rowCount = 16;
+        int colCount = 1;
+
+        Row row0 = sheet.createRow(rowCount - 1);
+        for (String titulo : titulos) {
+            Cell cell0 = row0.createCell(colCount++);
+            cell0.setCellValue(titulo);
+            cell0.setCellStyle(headers(wk));
+        }
+        colCount = 1;
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            Row row = sheet.createRow(rowCount++);
+            for (int j = 0; j < jTable1.getColumnCount(); j++) {
+                Cell cell = row.createCell(colCount++);
+                String valor = jTable1.getValueAt(i, j).toString();
+                if (!valor.equals("")) {
+                    valor = valor.replaceAll(",", "");
+                    valor = valor.replaceAll("\\(", "-");
+                    valor = valor.replaceAll("\\)", "");
+                    cell.setCellValue(Double.parseDouble(valor));
+                } else {
+                    cell.setCellValue(" ");
+                }
+                if (j != 0) {
+                    cell.setCellStyle(style1);
+                }
+            }
+            colCount = 1;
+        }
+    }
+
     
-    private String getFormatoMoneda(int ixMoneda){
-        String formato ="";
-        switch(ixMoneda){
-            case 0: formato="S/ ";break;
-            case 1: formato="$ ";break;
+
+    private void exportFinanciero(XSSFWorkbook wk, Sheet sheet) {
+        //Información de resultados generales de leasing financiero
+
+        int rowCount = 2;
+        int colCount = 1;
+        String moneda = cboMoneda.getSelectedItem().toString();
+
+        Row row = sheet.createRow(rowCount);
+        Cell cell = row.createCell(colCount);
+
+        cell.setCellValue("Cronograma");
+        cell.setCellStyle(titleStyle(wk));
+
+        cell = row.createCell(colCount + 1);
+        cell.setCellValue(moneda);
+        cell.setCellStyle(titleStyle(wk));
+        // Tasa original
+        row = sheet.createRow(rowCount + 1);
+        cell = row.createCell(colCount);
+        cell.setCellValue("Tasa de Interés Efectiva " + cboTasaOrigen.getSelectedItem().toString() + " (%)");
+        cell.setCellStyle(bold(wk));
+        row.createCell(colCount + 2).setCellValue(Double.parseDouble(txtInteres.getText()));
+
+        row = sheet.createRow(rowCount + 2);
+
+        cell = row.createCell(colCount);
+        cell.setCellValue("Tasa de Interés Efectiva " + cboPeriodo.getSelectedItem().toString() + " (360 días)");
+        cell.setCellStyle(bold(wk));
+        row.createCell(colCount + 2).setCellValue((double) formula.gettInteres() * 100);
+        
+        row = sheet.createRow(rowCount+3);
+        row.createCell(colCount).setCellValue("Valor del Bien");
+        row.createCell(colCount+1).setCellValue(formula.getValorBien());
+        
+        row = sheet.createRow(rowCount + 5);
+        String hTotales[] = {"Cuota", "Amortizaciones", "Interés"};
+        colCount = 2;
+        for (String hTotale : hTotales) {
+            cell = row.createCell(colCount++);
+            cell.setCellValue(hTotale);
+            cell.setCellStyle(titleStyle(wk));
+        }
+        colCount = 1;
+        row = sheet.createRow(rowCount + 6);
+        row.createCell(colCount).setCellValue("Totales a Pagar");
+        row.createCell(colCount + 1).setCellValue(formula.getDesembolso()); //Desembolso total
+
+        row.createCell(colCount + 2).setCellValue(AmortTotal); //Total Amort.
+        row.createCell(colCount + 3).setCellValue(InteresTotal);//Total Intereses
+
+        row = sheet.createRow(rowCount + 8);
+        row.createCell(colCount).setCellValue("Cuota " + cboPeriodo.getSelectedItem().toString());
+        row.createCell(colCount + 1).setCellValue(formula.getCuota());
+
+        row = sheet.createRow(rowCount + 9);
+        row.createCell(colCount).setCellValue("Opción de Compra");
+        row.createCell(colCount + 1).setCellValue(formula.getValorDeCompra());
+        row = sheet.createRow(rowCount + 10);
+        row.createCell(colCount).setCellValue("Valor Presente");
+        row.createCell(colCount + 1).setCellValue(formula.getValorPresente());
+        row = sheet.createRow(rowCount + 11);
+        row.createCell(colCount).setCellValue("Ahorro");
+        row.createCell(colCount + 1).setCellValue(formula.getAhorroFinal());
+
+        // Estilo a un grupo de celdas
+        for (int i = 5; i < 15; i++) {
+            Row r = sheet.getRow(i);
+            if (r != null) {
+                Cell c = r.getCell(colCount);
+                if (c != null) {
+                    c.setCellStyle(bold(wk));
+                }
+            }
+        }
+    }
+
+    private void exportOperativo(XSSFWorkbook wk, Sheet sheet) {
+        //Información de resultados generales de leasing operativo 
+        int rowCount = 2;
+        int colCount = 1;
+        String moneda = cboMoneda.getSelectedItem().toString();
+
+        Row row = sheet.createRow(rowCount);
+        Cell cell = row.createCell(colCount);
+
+        cell.setCellValue("Cronograma");
+        cell.setCellStyle(titleStyle(wk));
+
+        cell = row.createCell(colCount + 1);
+        cell.setCellValue(moneda);
+        cell.setCellStyle(titleStyle(wk));
+
+        row = sheet.createRow(rowCount + 2);
+
+        cell = row.createCell(colCount);
+        cell.setCellValue("Valor del Bien ");
+        cell.setCellStyle(bold(wk));
+        row.createCell(colCount + 1).setCellValue(formula.getValorBien());
+
+        row = sheet.createRow(rowCount + 4);
+        String hTotales[] = {"Cuota", "Escudo Fiscal", "Flujo Neto "+cboPeriodo.getSelectedItem().toString()};
+        colCount = 2;
+        for (String hTotale : hTotales) {
+            cell = row.createCell(colCount++);
+            cell.setCellValue(hTotale);
+            cell.setCellStyle(titleStyle(wk));
+        }
+        colCount = 1;
+        row = sheet.createRow(rowCount + 5);
+        row.createCell(colCount).setCellValue("Totales");
+        row.createCell(colCount + 1).setCellValue(formula.getCuota()*formula.getN()); //Desembolso total
+
+        row.createCell(colCount + 2).setCellValue((double)-(formula.getEscudoFiscalXAño()*formula.getN())); //Total escudo fiscal
+        row.createCell(colCount + 3).setCellValue(formula.getDesembolso());//Total Cuota anual neta
+
+        row = sheet.createRow(rowCount + 8);
+        row.createCell(colCount).setCellValue("Cuota " + cboPeriodo.getSelectedItem().toString());
+        row.createCell(colCount + 1).setCellValue(formula.getCuota());
+
+        row = sheet.createRow(rowCount + 9);
+        row.createCell(colCount).setCellValue("Descuento (%)");
+        row.createCell(colCount + 1).setCellValue(formula.gettDescuento()*100);
+        row = sheet.createRow(rowCount + 10);
+        row.createCell(colCount).setCellValue("Valor Presente");
+        row.createCell(colCount + 1).setCellValue(formula.getValorPresente());
+        row = sheet.createRow(rowCount + 11);
+        row.createCell(colCount).setCellValue("Ahorro");
+        row.createCell(colCount + 1).setCellValue(formula.getAhorroFinal());
+
+        // Estilo a un grupo de celdas
+        for (int i = 6; i < 15; i++) {
+            Row r = sheet.getRow(i);
+            if (r != null) {
+                Cell c = r.getCell(colCount);
+                if (c != null) {
+                    c.setCellStyle(bold(wk));
+                }
+            }
+        }
+    }
+
+    private CellStyle bold(XSSFWorkbook wk) {
+        CellStyle bold = wk.createCellStyle();
+        Font font = wk.createFont();
+        font.setBold(true);
+        bold.setFont(font);
+        return bold;
+    }
+
+    private CellStyle headers(XSSFWorkbook wk) {
+        CellStyle headers = wk.createCellStyle();
+        headers.setBorderBottom(BorderStyle.THICK);
+        Font font = wk.createFont();
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 12);
+        headers.setAlignment(HorizontalAlignment.CENTER); //Funciona con POI versión 5.2.3
+        headers.setFont(font);
+        return headers;
+    }
+
+    private CellStyle titleStyle(XSSFWorkbook wk) {
+        CellStyle titleStyle = wk.createCellStyle();
+        Font font = wk.createFont();
+        font.setColor(IndexedColors.ORANGE.getIndex());
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 12);
+        titleStyle.setAlignment(HorizontalAlignment.CENTER); //Funciona con POI versión 5.2.3
+        titleStyle.setFont(font);
+        return titleStyle;
+    }
+    
+    private void fileChooser(XSSFWorkbook wk) {
+        try {
+            String current = System.getProperty("user.dir");
+            JFileChooser jfc = new JFileChooser();
+            // Formato por defecto .xlsx
+            File defaultExt = new File("leasing.xlsx");
+            // Filtro de formato de archivo
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos Excel (*.xlsx)", ".xlsx");
+            jfc.setFileFilter(filter);
+            jfc.setSelectedFile(defaultExt);
+            jfc.setCurrentDirectory(new File(current));
+            
+            int returnVal = jfc.showSaveDialog(null);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = jfc.getSelectedFile();
+                String path = file.getAbsolutePath();
+                if(!path.endsWith(".xlsx")) path += ".xlsx";
+                FileOutputStream output = new FileOutputStream(path);
+                wk.write(output);
+                output.close();
+                JOptionPane.showMessageDialog(null, "Archivo guardado exitosamente en "+path,"Guardado",JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+    
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        if (formula != null) {
+            XSSFWorkbook wk = new XSSFWorkbook();
+            Sheet sheet = wk.createSheet("leasing-reporte");
+
+            //Headers
+            String[] titulos;
+            if (rbCompra.isSelected()) {
+                titulos = new String[]{"PERIODO", "CUOTA", "INTERÉS", "AMORTIZACIÓN", "SALDO"};
+                exportFinanciero(wk, sheet);
+            } else {
+                titulos = new String[]{"PERIODO", "CUOTA", "ESCUDO FISCAL", "CUOTA TOTAL "+cboPeriodo.getSelectedItem().toString().toUpperCase()};
+                exportOperativo(wk, sheet);
+            }
+
+            table(wk, sheet, titulos);
+            fileChooser(wk);
+        }
+    }//GEN-LAST:event_btnExportActionPerformed
+
+    private String getFormatoMoneda(int ixMoneda) {
+        String formato = "";
+        switch (ixMoneda) {
+            case 0:
+                formato = "S/ ";
+                break;
+            case 1:
+                formato = "$ ";
+                break;
         }
         return formato;
     }
-    
-    private boolean validarCalcular(){
+
+    private boolean validarCalcular() {
         boolean opcionCompra = rbCompra.isSelected();
-        if(txtBien.getText().isEmpty() || txtDescuento.getText().isEmpty() || txtN.getText().isEmpty()){
+        if (txtBien.getText().isEmpty() || txtDescuento.getText().isEmpty() || txtN.getText().isEmpty()) {
             return false;
         }
-        if(opcionCompra){
-            if(txtInteres.getText().isEmpty() || txtResidual.getText().isEmpty()){
+        if (opcionCompra) {
+            if (txtInteres.getText().isEmpty() || txtResidual.getText().isEmpty()) {
                 return false;
             }
-        }else{
-            if(txtCuota.getText().isEmpty()){
+        } else {
+            if (txtCuota.getText().isEmpty()) {
                 return false;
             }
         }
         return true;
     }
-    
-    private void mostrarFinanciero(Formulas f){
-        Object datos[][] = new Object[f.getN()+1][5];
-        String titulos[] = {"PERIODO","CUOTA","INTERÉS","AMORTIZACIÓN","SALDO"};
+
+    private void mostrarFinanciero(Formulas f) {
+        InteresTotal = 0.0;
+        AmortTotal = 0.0;
+        Object datos[][] = new Object[f.getN() + 1][5];
+        String titulos[] = {"PERIODO", "CUOTA", "INTERÉS", "AMORTIZACIÓN", "SALDO"};
         datos[0][0] = "0";
         datos[0][1] = "";
         datos[0][2] = "";
         datos[0][3] = "";
         datos[0][4] = String.format(Locale.UK, "%,.2f", f.getValorBien());
-        for(int i=1;i<=f.getN();i++){
-            double fila[] = f.getTablaInteres_Amort_Saldo()[i-1];
+        for (int i = 1; i <= f.getN(); i++) {
+            double fila[] = f.getTablaInteres_Amort_Saldo()[i - 1];
             datos[i][0] = i;
-            if(i!=f.getN())
+            if (i != f.getN()) {
                 datos[i][1] = String.format(Locale.UK, "%,.2f", f.getCuota());
-            else
+            } else {
                 datos[i][1] = String.format(Locale.UK, "%,.2f", f.getCuotaFinal());
+            }
             datos[i][2] = String.format(Locale.UK, "%,.2f", fila[0]);
+            InteresTotal += fila[0];
             datos[i][3] = String.format(Locale.UK, "%,.2f", fila[1]);
+            AmortTotal += fila[1];
             datos[i][4] = String.format(Locale.UK, "%,.2f", fila[2]);
         }
         modelo.setDataVector(datos, titulos);
     }
-    
-    private void mostrarOperativo(Formulas f){
+
+    private void mostrarOperativo(Formulas f) {
         Object datos[][] = new Object[f.getN()][4];
-        String titulos[] = {"PERIODO","CUOTA","ESCUDO FISCAL","CUOTA TOTAL ANUAL"};
-        for(int i=0;i<f.getN();i++){
-            datos[i][0] = i+1;
+        String titulos[] = {"PERIODO", "CUOTA", "ESCUDO FISCAL", "CUOTA TOTAL ANUAL"};
+        for (int i = 0; i < f.getN(); i++) {
+            datos[i][0] = i + 1;
             datos[i][1] = String.format(Locale.UK, "%,.2f", f.getCuota());
-            datos[i][2] = "("+String.format(Locale.UK, "%,.2f", f.getEscudoFiscalXAño())+")";
+            datos[i][2] = "(" + String.format(Locale.UK, "%,.2f", f.getEscudoFiscalXAño()) + ")";
             datos[i][3] = String.format(Locale.UK, "%,.2f", f.getFlujoNetoPeriodo());
         }
         modelo.setDataVector(datos, titulos);
@@ -577,6 +876,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCalcular;
+    private javax.swing.JButton btnExport;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cboMoneda;
     private javax.swing.JComboBox<String> cboPeriodo;

@@ -11,6 +11,16 @@
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE150</version>
         </dependency>
+       <dependency> 
+            <groupId>org.apache.poi</groupId> 
+            <artifactId>poi</artifactId> 
+            <version>5.2.3</version> 
+        </dependency> 
+        <dependency> 
+            <groupId>org.apache.poi</groupId> 
+            <artifactId>poi-ooxml</artifactId> 
+            <version>5.2.3</version> 
+        </dependency> 
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,20 +29,52 @@
         <exec.mainClass>com.grupo1.leasing.LeasingCalculadora</exec.mainClass>
     </properties>
     <build>
-        <plugins>
+      
+        <plugins>  
+          <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.1</version>
                 <configuration>
                     <archive>
-                      <manifest>
-                        <addClasspath>true</addClasspath>
-                        <mainClass>com.grupo1.leasing.LeasingCalculadora</mainClass>
-                      </manifest>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>com.grupo1.leasing.LeasingCalculadora</mainClass>
+                        </manifest>
                     </archive>
                 </configuration>
             </plugin>
+            -->
+             <!-- Maven Assembly Plugin -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>2.4.1</version>
+            <configuration>
+                <!-- get all project dependencies -->
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+                <!-- MainClass in mainfest make a executable jar -->
+                <archive>
+                  <manifest>
+                    <mainClass>com.grupo1.leasing.LeasingCalculadora</mainClass>
+                  </manifest>
+                </archive>
+
+            </configuration>
+            <executions>
+              <execution>
+                <id>make-assembly</id>
+                                    <!-- bind to the packaging phase -->
+                <phase>package</phase>
+                <goals>
+                    <goal>single</goal>
+                </goals>
+              </execution>
+            </executions>
+        </plugin>
         </plugins>
     </build>
 </project>
