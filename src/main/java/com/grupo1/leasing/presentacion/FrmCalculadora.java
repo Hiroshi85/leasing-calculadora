@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.util.Locale;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -463,7 +464,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
                     lblValorCompra.setVisible(false);
                 }
 
-                lblDesembolso.setText("Desembolso total: " + formato + String.format(Locale.UK, "%,.2f", formula.getDesembolso()));
+                lblDesembolso.setText("Costo total: " + formato + String.format(Locale.UK, "%,.2f", formula.getDesembolso()));
                 lblCuota.setText("Cuota: " + formato + String.format(Locale.UK, "%,.2f", formula.getCuota()));
                 lblValorPresente.setText("Valor Presente: " + formato + String.format(Locale.UK, "%,.2f", formula.getValorPresente()));
                 lblAhorroFinal.setText("Ahorro por Leasing: " + formato + String.format(Locale.UK, "%,.2f", formula.getAhorroFinal()));
@@ -549,22 +550,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
         }
     }
 
-    private void fileChooser(XSSFWorkbook wk) {
-        try {
-            String current = System.getProperty("user.dir");
-            JFileChooser jfc = new JFileChooser();
-            jfc.setCurrentDirectory(new File(current));
-            int returnVal = jfc.showSaveDialog(null);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File file = jfc.getSelectedFile();
-                String path = file.getAbsolutePath();
-                FileOutputStream output = new FileOutputStream(path);
-                wk.write(output);
-                output.close();
-            }
-        } catch (Exception e) {
-        }
-    }
+    
 
     private void exportFinanciero(XSSFWorkbook wk, Sheet sheet) {
         //Información de resultados generales de leasing financiero
@@ -595,17 +581,21 @@ public class FrmCalculadora extends javax.swing.JFrame {
         cell.setCellValue("Tasa de Interés Efectiva " + cboPeriodo.getSelectedItem().toString() + " (360 días)");
         cell.setCellStyle(bold(wk));
         row.createCell(colCount + 2).setCellValue((double) formula.gettInteres() * 100);
-
-        row = sheet.createRow(rowCount + 4);
+        
+        row = sheet.createRow(rowCount+3);
+        row.createCell(colCount).setCellValue("Valor del Bien");
+        row.createCell(colCount+1).setCellValue(formula.getValorBien());
+        
+        row = sheet.createRow(rowCount + 5);
         String hTotales[] = {"Cuota", "Amortizaciones", "Interés"};
         colCount = 2;
-        for (int i = 0; i < hTotales.length; i++) {
+        for (String hTotale : hTotales) {
             cell = row.createCell(colCount++);
-            cell.setCellValue(hTotales[i]);
+            cell.setCellValue(hTotale);
             cell.setCellStyle(titleStyle(wk));
         }
         colCount = 1;
-        row = sheet.createRow(rowCount + 5);
+        row = sheet.createRow(rowCount + 6);
         row.createCell(colCount).setCellValue("Totales a Pagar");
         row.createCell(colCount + 1).setCellValue(formula.getDesembolso()); //Desembolso total
 
@@ -627,7 +617,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
         row.createCell(colCount + 1).setCellValue(formula.getAhorroFinal());
 
         // Estilo a un grupo de celdas
-        for (int i = 6; i < 15; i++) {
+        for (int i = 5; i < 15; i++) {
             Row r = sheet.getRow(i);
             if (r != null) {
                 Cell c = r.getCell(colCount);
@@ -640,6 +630,67 @@ public class FrmCalculadora extends javax.swing.JFrame {
 
     private void exportOperativo(XSSFWorkbook wk, Sheet sheet) {
         //Información de resultados generales de leasing operativo 
+        int rowCount = 2;
+        int colCount = 1;
+        String moneda = cboMoneda.getSelectedItem().toString();
+
+        Row row = sheet.createRow(rowCount);
+        Cell cell = row.createCell(colCount);
+
+        cell.setCellValue("Cronograma");
+        cell.setCellStyle(titleStyle(wk));
+
+        cell = row.createCell(colCount + 1);
+        cell.setCellValue(moneda);
+        cell.setCellStyle(titleStyle(wk));
+
+        row = sheet.createRow(rowCount + 2);
+
+        cell = row.createCell(colCount);
+        cell.setCellValue("Valor del Bien ");
+        cell.setCellStyle(bold(wk));
+        row.createCell(colCount + 1).setCellValue(formula.getValorBien());
+
+        row = sheet.createRow(rowCount + 4);
+        String hTotales[] = {"Cuota", "Escudo Fiscal", "Flujo Neto "+cboPeriodo.getSelectedItem().toString()};
+        colCount = 2;
+        for (String hTotale : hTotales) {
+            cell = row.createCell(colCount++);
+            cell.setCellValue(hTotale);
+            cell.setCellStyle(titleStyle(wk));
+        }
+        colCount = 1;
+        row = sheet.createRow(rowCount + 5);
+        row.createCell(colCount).setCellValue("Totales");
+        row.createCell(colCount + 1).setCellValue(formula.getCuota()*formula.getN()); //Desembolso total
+
+        row.createCell(colCount + 2).setCellValue((double)-(formula.getEscudoFiscalXAño()*formula.getN())); //Total escudo fiscal
+        row.createCell(colCount + 3).setCellValue(formula.getDesembolso());//Total Cuota anual neta
+
+        row = sheet.createRow(rowCount + 8);
+        row.createCell(colCount).setCellValue("Cuota " + cboPeriodo.getSelectedItem().toString());
+        row.createCell(colCount + 1).setCellValue(formula.getCuota());
+
+        row = sheet.createRow(rowCount + 9);
+        row.createCell(colCount).setCellValue("Descuento (%)");
+        row.createCell(colCount + 1).setCellValue(formula.gettDescuento()*100);
+        row = sheet.createRow(rowCount + 10);
+        row.createCell(colCount).setCellValue("Valor Presente");
+        row.createCell(colCount + 1).setCellValue(formula.getValorPresente());
+        row = sheet.createRow(rowCount + 11);
+        row.createCell(colCount).setCellValue("Ahorro");
+        row.createCell(colCount + 1).setCellValue(formula.getAhorroFinal());
+
+        // Estilo a un grupo de celdas
+        for (int i = 6; i < 15; i++) {
+            Row r = sheet.getRow(i);
+            if (r != null) {
+                Cell c = r.getCell(colCount);
+                if (c != null) {
+                    c.setCellStyle(bold(wk));
+                }
+            }
+        }
     }
 
     private CellStyle bold(XSSFWorkbook wk) {
@@ -671,6 +722,34 @@ public class FrmCalculadora extends javax.swing.JFrame {
         titleStyle.setFont(font);
         return titleStyle;
     }
+    
+    private void fileChooser(XSSFWorkbook wk) {
+        try {
+            String current = System.getProperty("user.dir");
+            JFileChooser jfc = new JFileChooser();
+            // Formato por defecto .xlsx
+            File defaultExt = new File("leasing.xlsx");
+            // Filtro de formato de archivo
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos Excel (*.xlsx)", ".xlsx");
+            jfc.setFileFilter(filter);
+            jfc.setSelectedFile(defaultExt);
+            jfc.setCurrentDirectory(new File(current));
+            
+            int returnVal = jfc.showSaveDialog(null);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = jfc.getSelectedFile();
+                String path = file.getAbsolutePath();
+                if(!path.endsWith(".xlsx")) path += ".xlsx";
+                FileOutputStream output = new FileOutputStream(path);
+                wk.write(output);
+                output.close();
+                JOptionPane.showMessageDialog(null, "Archivo guardado exitosamente en "+path,"Guardado",JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+    
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         if (formula != null) {
             XSSFWorkbook wk = new XSSFWorkbook();
@@ -682,7 +761,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
                 titulos = new String[]{"PERIODO", "CUOTA", "INTERÉS", "AMORTIZACIÓN", "SALDO"};
                 exportFinanciero(wk, sheet);
             } else {
-                titulos = new String[]{"PERIODO", "CUOTA", "ESCUDO FISCAL", "CUOTA TOTAL ANUAL"};
+                titulos = new String[]{"PERIODO", "CUOTA", "ESCUDO FISCAL", "CUOTA TOTAL "+cboPeriodo.getSelectedItem().toString().toUpperCase()};
                 exportOperativo(wk, sheet);
             }
 
