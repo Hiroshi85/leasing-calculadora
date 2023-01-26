@@ -652,7 +652,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
         row.createCell(colCount + 1).setCellValue(formula.getValorBien());
 
         row = sheet.createRow(rowCount + 4);
-        String hTotales[] = {"Cuota", "Escudo Fiscal", "Flujo Neto "+cboPeriodo.getSelectedItem().toString()};
+        String hTotales[] = {"Cuota", "Escudo Fiscal", "Costo Total"};
         colCount = 2;
         for (String hTotale : hTotales) {
             cell = row.createCell(colCount++);
@@ -829,7 +829,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
 
     private void mostrarOperativo(Formulas f) {
         Object datos[][] = new Object[f.getN()][4];
-        String titulos[] = {"PERIODO", "CUOTA", "ESCUDO FISCAL", "CUOTA TOTAL ANUAL"};
+        String titulos[] = {"PERIODO", "CUOTA", "ESCUDO FISCAL", "COSTO ANUAL"};
         for (int i = 0; i < f.getN(); i++) {
             datos[i][0] = i + 1;
             datos[i][1] = String.format(Locale.UK, "%,.2f", f.getCuota());
