@@ -26,7 +26,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
     private Formulas formula;
     private double InteresTotal;
     private double AmortTotal;
-    
+
     DefaultTableModel modelo = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -89,6 +89,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         lblFormato = new javax.swing.JLabel();
         btnExport = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Leasing");
@@ -294,6 +295,13 @@ public class FrmCalculadora extends javax.swing.JFrame {
             }
         });
 
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -347,9 +355,11 @@ public class FrmCalculadora extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(98, 98, 98)
                                         .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
@@ -396,6 +406,8 @@ public class FrmCalculadora extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNuevo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblFormato)
                         .addGap(2, 2, 2)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -550,8 +562,6 @@ public class FrmCalculadora extends javax.swing.JFrame {
         }
     }
 
-    
-
     private void exportFinanciero(XSSFWorkbook wk, Sheet sheet) {
         //Información de resultados generales de leasing financiero
 
@@ -581,11 +591,11 @@ public class FrmCalculadora extends javax.swing.JFrame {
         cell.setCellValue("Tasa de Interés Efectiva " + cboPeriodo.getSelectedItem().toString() + " (360 días)");
         cell.setCellStyle(bold(wk));
         row.createCell(colCount + 2).setCellValue((double) formula.gettInteres() * 100);
-        
-        row = sheet.createRow(rowCount+3);
+
+        row = sheet.createRow(rowCount + 3);
         row.createCell(colCount).setCellValue("Valor del Bien");
-        row.createCell(colCount+1).setCellValue(formula.getValorBien());
-        
+        row.createCell(colCount + 1).setCellValue(formula.getValorBien());
+
         row = sheet.createRow(rowCount + 5);
         String hTotales[] = {"Cuota", "Amortizaciones", "Interés"};
         colCount = 2;
@@ -662,9 +672,9 @@ public class FrmCalculadora extends javax.swing.JFrame {
         colCount = 1;
         row = sheet.createRow(rowCount + 5);
         row.createCell(colCount).setCellValue("Totales");
-        row.createCell(colCount + 1).setCellValue(formula.getCuota()*formula.getN()); //Desembolso total
+        row.createCell(colCount + 1).setCellValue(formula.getCuota() * formula.getN()); //Desembolso total
 
-        row.createCell(colCount + 2).setCellValue((double)-(formula.getEscudoFiscalXAño()*formula.getN())); //Total escudo fiscal
+        row.createCell(colCount + 2).setCellValue((double) -(formula.getEscudoFiscalXAño() * formula.getN())); //Total escudo fiscal
         row.createCell(colCount + 3).setCellValue(formula.getDesembolso());//Total Cuota anual neta
 
         row = sheet.createRow(rowCount + 8);
@@ -673,7 +683,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
 
         row = sheet.createRow(rowCount + 9);
         row.createCell(colCount).setCellValue("Descuento (%)");
-        row.createCell(colCount + 1).setCellValue(formula.gettDescuento()*100);
+        row.createCell(colCount + 1).setCellValue(formula.gettDescuento() * 100);
         row = sheet.createRow(rowCount + 10);
         row.createCell(colCount).setCellValue("Valor Presente");
         row.createCell(colCount + 1).setCellValue(formula.getValorPresente());
@@ -722,7 +732,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
         titleStyle.setFont(font);
         return titleStyle;
     }
-    
+
     private void fileChooser(XSSFWorkbook wk) {
         try {
             String current = System.getProperty("user.dir");
@@ -734,22 +744,24 @@ public class FrmCalculadora extends javax.swing.JFrame {
             jfc.setFileFilter(filter);
             jfc.setSelectedFile(defaultExt);
             jfc.setCurrentDirectory(new File(current));
-            
+
             int returnVal = jfc.showSaveDialog(null);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = jfc.getSelectedFile();
                 String path = file.getAbsolutePath();
-                if(!path.endsWith(".xlsx")) path += ".xlsx";
+                if (!path.endsWith(".xlsx")) {
+                    path += ".xlsx";
+                }
                 FileOutputStream output = new FileOutputStream(path);
                 wk.write(output);
                 output.close();
-                JOptionPane.showMessageDialog(null, "Archivo guardado exitosamente en "+path,"Guardado",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Archivo guardado exitosamente en " + path, "Guardado", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-    
+
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         if (formula != null) {
             XSSFWorkbook wk = new XSSFWorkbook();
@@ -761,7 +773,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
                 titulos = new String[]{"PERIODO", "CUOTA", "INTERÉS", "AMORTIZACIÓN", "SALDO"};
                 exportFinanciero(wk, sheet);
             } else {
-                titulos = new String[]{"PERIODO", "CUOTA", "ESCUDO FISCAL", "CUOTA TOTAL "+cboPeriodo.getSelectedItem().toString().toUpperCase()};
+                titulos = new String[]{"PERIODO", "CUOTA", "ESCUDO FISCAL", "CUOTA TOTAL " + cboPeriodo.getSelectedItem().toString().toUpperCase()};
                 exportOperativo(wk, sheet);
             }
 
@@ -769,6 +781,34 @@ public class FrmCalculadora extends javax.swing.JFrame {
             fileChooser(wk);
         }
     }//GEN-LAST:event_btnExportActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        txtCuota.setText("");
+        txtResidual.setText("");
+        txtBien.setText("");
+        
+        txtDescuento.setText("");
+        txtN.setText("");
+        txtInteres.setText("");
+        txtCuota.setEditable(false);
+        txtInteres.setEditable(true);
+        txtResidual.setEditable(true);
+        cboTasaOrigen.setEnabled(true);
+        formula = null;
+        rbCompra.setSelected(true);
+        rbCuota.setSelected(false);
+        lblAhorroFinal.setText("");
+        lblCuota.setText("");
+        lblDesembolso.setText("");
+        lblFormato.setText("");
+        lblMonedaCuota.setText("");
+        lblValorCompra.setText("");
+        lblValorPresente.setText("");
+        Object datos[][] = new Object[0][0];
+        String titulos [] = {};
+        modelo.setDataVector(datos, titulos);
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
     private String getFormatoMoneda(int ixMoneda) {
         String formato = "";
@@ -877,6 +917,7 @@ public class FrmCalculadora extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCalcular;
     private javax.swing.JButton btnExport;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cboMoneda;
     private javax.swing.JComboBox<String> cboPeriodo;
